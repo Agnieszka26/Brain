@@ -1,25 +1,26 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Navigation from './Components/Navigation/Navigation';
+import Rank from './Components/Rank/Rank';
+import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
+import Particle from "./Components/Particles/Particles";
 
-function App() {
+
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+ 
+      <Particle  />
+        <Navigation />   
+        <Rank />
+        <ImageLinkForm />
+      
+    { /*
+    <FaceRecognition />} */}
     </div>
   );
-}
+
+  }
+
 
 export default App;
