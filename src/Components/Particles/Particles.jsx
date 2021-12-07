@@ -1,4 +1,5 @@
 import Particles from "react-tsparticles";
+import './particles.css';
 
 const Particle = () => {
   const particlesInit = (main) => {
@@ -11,17 +12,13 @@ const Particle = () => {
     console.log(container);
   };
   return (
-    <Particles
+    <Particles 
+      className='particles'
       id="tsparticles"
       init={particlesInit}
       loaded={particlesLoaded}
       options={{
-        // background: {
-        //   color: {
-        //     value: "#000000AA",
-        //   },
-        //},
-        fpsLimit: 60,
+        fpsLimit: 30,
         interactivity: {
           events: {
             onClick: {
@@ -37,15 +34,15 @@ const Particle = () => {
           modes: {
             bubble: {
               distance: 400,
-              duration: 2,
-              opacity: 0.8,
-              size: 40,
+              duration: 3,
+              opacity: 0.5,
+              size: 10,
             },
             push: {
-              quantity: 4,
+              quantity: 2,
             },
             repulse: {
-              distance: 200,
+              distance: 100,
               duration: 0.4,
             },
           },
@@ -69,7 +66,7 @@ const Particle = () => {
             enable: true,
             outMode: "bounce",
             random: false,
-            speed: 3,
+            speed: 1,
             straight: false,
           },
           number: {

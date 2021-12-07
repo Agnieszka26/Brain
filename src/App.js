@@ -9,12 +9,11 @@ import Particle from "./Components/Particles/Particles";
 const App = () => {
   return (
     <div className="App">
- 
-      <Particle  />
+        <Particle />
         <Navigation />   
         <Rank />
         <ImageLinkForm />
-      
+        
     { /*
     <FaceRecognition />} */}
     </div>
