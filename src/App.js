@@ -69,7 +69,7 @@ class App extends Component{
     if(route==='signout'){
       this.setState({isSingnedIn:false});
     }else if(route==='home'){
-this.setState({isSingnedIn:true});
+      this.setState({isSingnedIn:true});
     }
     this.setState({route:route});
   }
@@ -88,9 +88,27 @@ this.setState({isSingnedIn:true});
     this.setState({imageUrl : input})
     clarifaiApp.models.predict(
       Clarifai.FACE_DETECT_MODEL,
-      input
-    )
-    .then(response =>this.displayFaceBox(this.calculateFaceLocation(response)))     
+      input)
+    .then(response => {
+      if (response) {
+        fetch('http://localhost:3001/image', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: this.state.user.id
+          })
+        })
+        .then(response = response.JSON())
+        .then(count =>{
+          this.setState(Object.assign(this.state.user,{
+            entries: count
+          }))
+        })
+      }
+    
+      
+      this.displayFaceBox(this.calculateFaceLocation(response))
+    })
     .catch(error =>console.log(error))
   }
   
@@ -101,13 +119,14 @@ this.setState({isSingnedIn:true});
         <Particle />
         <Navigation isSingnedIn={isSingnedIn} onChangeRoute={this.onChangeRoute}/>  
          {route ==='home'
-          ?<div><Rank />
-          <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
-          <FaceRecognition box={box} imageUrl={imageUrl}/>
+          ?<div>
+            <Rank name={this.state.user.name} entries={this.state.user.entries}/>
+            <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
+            <FaceRecognition box={box} imageUrl={imageUrl}/>
             </div>
            
            :(route === 'signin'
-           ?<SignIn onChangeRoute={this.onChangeRoute}/>
+           ?<SignIn loadUser={this.loadUser} onChangeRoute={this.onChangeRoute}/>
            :<Register loadUser={this.loadUser} onChangeRoute={this.onChangeRoute}/>)
            
         
