@@ -24,9 +24,31 @@ class App extends Component{
       imageUrl: '',
       box: {},
       route: 'signin',
-      isSingnedIn: false
+      isSingnedIn: false,
+      user: { 
+            id: '',
+            name: '',
+            email: '',
+            entries: 0,
+            joined: ""
+      }
     }
   }
+
+
+  loadUser = (data) =>{
+    this.setState({
+      user: { 
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined
+  }
+
+    })
+  }
+
 
   calculateFaceLocation = (data) =>{
     const clarifyFace = data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -40,6 +62,8 @@ class App extends Component{
       bottomRow: height-(clarifyFace.bottom_row * height)
     }
   }
+
+
 
   onChangeRoute = (route) => {
     if(route==='signout'){
@@ -84,7 +108,7 @@ this.setState({isSingnedIn:true});
            
            :(route === 'signin'
            ?<SignIn onChangeRoute={this.onChangeRoute}/>
-           :<Register onChangeRoute={this.onChangeRoute}/>)
+           :<Register loadUser={this.loadUser} onChangeRoute={this.onChangeRoute}/>)
            
         
           }
